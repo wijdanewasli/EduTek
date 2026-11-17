@@ -14,10 +14,16 @@ class Etudiant extends Utilisateur
     #[ORM\Column(type: 'date_immutable', nullable: true)]
     private ?\DateTimeImmutable $dateNaissance = null;
 
+    #[ORM\ManyToOne(targetEntity: Classe::class, inversedBy: 'etudiants')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
+    private ?Classe $classe = null;
+
     public function getRoles(): array { return ['ROLE_ETUDIANT', 'ROLE_USER']; }
 
     public function getNumeroInscription(): string { return $this->numeroInscription; }
     public function setNumeroInscription(string $n): static { $this->numeroInscription = $n; return $this; }
     public function getDateNaissance(): ?\DateTimeImmutable { return $this->dateNaissance; }
     public function setDateNaissance(?\DateTimeImmutable $d): static { $this->dateNaissance = $d; return $this; }
+    public function getClasse(): ?Classe { return $this->classe; }
+    public function setClasse(?Classe $classe): static { $this->classe = $classe; return $this; }
 }
